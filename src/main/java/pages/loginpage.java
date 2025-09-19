@@ -16,7 +16,7 @@ public class loginpage {
     private By username =By.id("username");
     private By password =By.id("password");
     private By login = By.cssSelector("#login > button > i");
-
+    private By flash = By.id("flash");
 
     //Constructor
 
@@ -37,5 +37,9 @@ public class loginpage {
 
 
     }
+    public String validacionlogin() {
 
+        return driver.findElement(flash).getText();
+
+    }
 }
