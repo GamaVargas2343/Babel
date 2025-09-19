@@ -3,36 +3,29 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.*;
+import pages.loginpage;
 
 
 public class logintest {
     WebDriver driver;
+    loginpage page;
+
     @BeforeMethod
     public void inicio(){
 
         driver = new EdgeDriver();
         driver.get("https://the-internet.herokuapp.com/login");
+        page=new loginpage(driver);
+
 
     }
     @Test
     public void testbueno(){
-        WebElement username = driver.findElement(By.id("username"));
-        WebElement password = driver.findElement(By.id("password"));
-        WebElement login = driver.findElement(By.cssSelector("#login > button > i"));
-
-        username.sendKeys("tomsmith");
-        password.sendKeys("SuperSecretPassword!");
-        login.click();
+        page.iniciarSesion("tomsmith","SuperSecretPassword!");
     }
     @Test
     public void testmalo(){
-        WebElement username = driver.findElement(By.id("username"));
-        WebElement password = driver.findElement(By.id("password"));
-        WebElement login = driver.findElement(By.cssSelector("#login > button > i"));
-
-        username.sendKeys("tomsmith1");
-        password.sendKeys("SuperSecretPassword!1");
-        login.click();
+        page.iniciarSesion("tomsmith1","SuperSecretPassword!1");
     }
 
     @AfterMethod
