@@ -4,13 +4,14 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import utils.waithelper;
 
 
 public class loginpage {
 
 
     WebDriver driver;
-
+    waithelper wait;
 
     //Selectores
     private By username =By.id("username");
@@ -22,6 +23,7 @@ public class loginpage {
 
     public loginpage(WebDriver driver){
         this.driver=driver;
+        this.wait= new waithelper(driver);
     }
 
     //Acciones
@@ -39,7 +41,9 @@ public class loginpage {
     }
     public String validacionlogin() {
 
-        return driver.findElement(flash).getText();
+        return wait.esperarElementoVisible(flash).getText();
+
+
 
     }
 }
