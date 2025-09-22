@@ -3,10 +3,12 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+import org.testng.ITest;
+import org.testng.ITestResult;
 import org.testng.annotations.*;
 import pages.loginpage;
 import utils.waithelper;
-
+import utils.screenshothelper;
 import java.time.Duration;
 
 
@@ -48,8 +50,11 @@ public class logintest {
 
 
     @AfterMethod
-    public void Cerrar(){
+    public void Cerrar(ITestResult resultado){
+        if (ITestResult.FAILURE== resultado.getStatus())
+          screenshothelper.capturaPantalla(driver,resultado.getName());
         driver.quit();
+
     }
 
 }
