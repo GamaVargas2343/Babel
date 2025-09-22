@@ -24,18 +24,28 @@ public class logintest {
 
 
     }
-    @Test
-    public void testbueno(){
-        page.iniciarSesion("tomsmith","SuperSecretPassword!");
-        String mensaje = page.validacionlogin();
-        Assert.assertTrue(mensaje.contains( "You logged into"),"el mensaje esperado no es exitoso");
+    @DataProvider (name = "Datos" )
+    public Object [][] obtenerDatos (){
+
+        return new Object[][]{
+                {
+                        "tomsmith" ,"SuperSecretPassword!" , "You logged into"
+
+                },
+                {
+                        "tomsmith1" ,"SuperSecretPassword!" , "Your username is invalid!"
+                }
+
+        };
+
     }
-    @Test
-    public void testmalo(){
-        page.iniciarSesion("tomsmith1","SuperSecretPassword!1");
-        String mensaje = page.validacionlogin();
-        Assert.assertTrue(mensaje.contains( "Your username is invalid!"));
+    @Test (dataProvider = "Datos")
+    public void testLogin(String nombreUsuario,String contrasena , String mensajeEsperado){
+        page.iniciarSesion(nombreUsuario,contrasena);
+        String mensajeObtenido = page.validacionlogin();
+        Assert.assertTrue(mensajeObtenido.contains(mensajeEsperado),"el mensaje esperado no es exitoso");
     }
+
 
     @AfterMethod
     public void Cerrar(){
