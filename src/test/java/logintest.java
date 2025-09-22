@@ -5,6 +5,9 @@ import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import pages.loginpage;
+import utils.waithelper;
+
+import java.time.Duration;
 
 
 public class logintest {
@@ -15,6 +18,7 @@ public class logintest {
     public void inicio(){
 
         driver = new EdgeDriver();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.get("https://the-internet.herokuapp.com/login");
         page=new loginpage(driver);
 
