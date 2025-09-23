@@ -52,11 +52,11 @@ public class logintest {
     public void testLogin(String nombreUsuario,String contrasena , String mensajeEsperado){
         try {
             page.iniciarSesion(nombreUsuario, contrasena);
+            test.log(Status.INFO,"Se digíto correctamente nombre usuario: "+nombreUsuario + " y contraseña: "+contrasena );
             String mensajeObtenido = page.validacionlogin();
             Assert.assertTrue(mensajeObtenido.contains(mensajeEsperado), "el mensaje esperado no es exitoso");
             test.pass("Test paso correctamente");
         }catch (Exception e) {
-            test.fail("el test ha fallado"+e.getMessage());
             throw e;
         }
     }
@@ -64,9 +64,15 @@ public class logintest {
 
     @AfterMethod
     public void Cerrar(ITestResult resultado){
-        if (ITestResult.FAILURE== resultado.getStatus())
-          screenshothelper.capturaPantalla(driver,resultado.getName());
+        if (ITestResult.FAILURE== resultado.getStatus()){
+            String ruta = screenshothelper.capturarPantallaDevolverRuta(driver,resultado.getName());
+            if (ruta!=null){
+                test.fail(("test fallido"));
+                test.addScreenCaptureFromPath(ruta);
+            }
+        }
         driver.quit();
+
 
     }
     @AfterSuite

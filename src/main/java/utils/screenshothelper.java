@@ -27,4 +27,22 @@ public class screenshothelper {
 
         }
     }
+    public static String capturarPantallaDevolverRuta (WebDriver driver,String nombreBase){
+        TakesScreenshot pantallazo = (TakesScreenshot) driver;
+        File capturas = pantallazo.getScreenshotAs(OutputType.FILE);
+        String tiempo = new SimpleDateFormat("dd-MM-yyyy_HHmmss").format(new Date());
+        String nombreArchivo = "captura_"+ nombreBase + "_"+ tiempo + ".png";
+        File destino = new File("evidencias/"+nombreArchivo);
+        destino.getParentFile().mkdirs();
+        try {
+            Files.copy(capturas.toPath(),destino.toPath());
+            System.out.println("la captura se guardo");
+            return destino.getAbsolutePath();
+        } catch (IOException e){
+
+            System.out.println("la captura no se guardo " + e.getMessage());
+            return null;
+
+        }
+    }
 }
