@@ -10,7 +10,7 @@ import pages.loginpage;
 import utils.waithelper;
 import utils.screenshothelper;
 import java.time.Duration;
-
+import utils.leerConfig;
 
 public class logintest {
     WebDriver driver;
@@ -20,8 +20,8 @@ public class logintest {
     public void inicio(){
 
         driver = new EdgeDriver();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.get("https://the-internet.herokuapp.com/login");
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(leerConfig.obtenerTime("timeout")));
+        driver.get(leerConfig.obtenerValor("Url"));
         page=new loginpage(driver);
 
 
@@ -31,11 +31,11 @@ public class logintest {
 
         return new Object[][]{
                 {
-                        "tomsmith" ,"SuperSecretPassword!" , "You logged into"
+                        leerConfig.obtenerValor("usuarioCorrecto") ,leerConfig.obtenerValor("passwordCorrecto") , "You logged into"
 
                 },
                 {
-                        "tomsmith1" ,"SuperSecretPassword!" , "Your username is invalid!"
+                        leerConfig.obtenerValor("usuarioIncorrecto") ,leerConfig.obtenerValor("passwordIncorrecto"), "Your username is invalid!"
                 }
 
         };
